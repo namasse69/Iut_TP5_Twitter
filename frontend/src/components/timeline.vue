@@ -14,7 +14,7 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Bienvenue sur Twitter'
+      msg: 'Timeline twitter'
     }
   }
 }
