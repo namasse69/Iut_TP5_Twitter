@@ -22,7 +22,7 @@ public class Utilisateur implements Serializable {
 
     public Utilisateur() {
     }
-
+    git remote set-url origin git:https://github.com/namasse69
     public String getHandle() {
         return handle;
     }

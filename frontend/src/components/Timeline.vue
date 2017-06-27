@@ -1,24 +1,19 @@
 <template>
   <div>
     <h1>{{ msg }}</h1>
-    <ul>
-      <li v-for="tweet in tweets">
-        <tweet :tweet="tweet"></tweet>
-      </li>
-    </ul>
-
+    <feed :tweets="tweets" :loading="loading" ></feed>
   </div>
 </template>
 
 <script>
-import Tweet from './Tweet'
+import Feed from './Feed'
 import Vue from 'vue'
 import Resource from 'vue-resource'
 Vue.use(Resource)
 
 export default {
   name: 'hello',
-  components: {Tweet},
+  components: {Feed},
   created () {
     this.fetchTweets()
   },
@@ -28,6 +23,7 @@ export default {
       this.$http.get('http://localhost:8080/list').then(response => {
         // get body data
         this.tweets = response.body
+        this.loading = false
       }, response => {
         // error callback
       })
@@ -35,12 +31,8 @@ export default {
   },
   data () {
     return {
-      tweets: [
-
-        { auteur: 'Gaëtan', contenu: 'Ce que tu veux 1 !' },
-        { auteur: 'Olivier', contenu: 'Ce que tu veux 2 !' },
-        { auteur: 'Yamine', contenu: 'Ce que tu veux 3 !' }
-      ]
+      tweets: [],
+      loading: true
     }
   }
 }
@@ -59,7 +51,7 @@ ul {
 
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 0 100px;
 }
 
 a {
