@@ -26,14 +26,14 @@ import moment from 'moment'
 export default {
   components: {Icon},
   name: 'tweet',
-  props: ['tweet'],
+  props: ['tweet', 'connecUser'],
   methods: {
     moment: function (date) {
       return moment(date)
     },
 
     retweet: function (id) {
-      this.$http.get('http://localhost:8080/retweet', {responseType: 'text', params: {utilisateur: 'snoopdog', tweet: this.tweet.id}}).then(response => {
+      this.$http.get('http://localhost:8080/retweet', {responseType: 'text', params: {utilisateur: this.connecUser, tweet: this.tweet.id}}).then(response => {
         this.$emit('retweeted', id)
       }, response => {})
     }

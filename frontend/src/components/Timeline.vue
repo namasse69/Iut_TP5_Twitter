@@ -1,7 +1,7 @@
 <template>
   <div>
-    <utilisateur :utilisateurs="utilisateurs"></utilisateur>
-    <feed :tweets="tweets" @retweeted="retweet" :loading="loading" ></feed>
+    <utilisateur :utilisateurs="utilisateurs" @connecUser="connecUser"></utilisateur>
+    <feed :tweets="tweets" :connecUser="connecUser" @retweeted="retweet" :loading="loading" ></feed>
   </div>
 </template>
 
@@ -37,10 +37,14 @@ export default {
     retweet: function (id) {
       var tweet = this.tweets.find(tweet => id === tweet.id)
       tweet.retweeters.push({handle: 'johndoe'})
+    },
+    connecUser: function (user) {
+      this.connecUser = user
     }
   },
   data () {
     return {
+      connecUser: null,
       tweets: [],
       utilisateurs: [],
       loading: true

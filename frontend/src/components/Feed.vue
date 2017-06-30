@@ -3,7 +3,7 @@
     <p v-if="loading">Chargement des tweets en cours ...</p>
     <ul v-else>
       <li  v-for="tweet in tweets" class="feed">
-        <tweet :tweet="tweet" @retweeted="retweet" ></tweet>
+        <tweet :tweet="tweet" :connecUser="connecUser" @retweeted="retweet" ></tweet>
       </li>
     </ul>
   </div>
@@ -14,7 +14,7 @@ import Tweet from './Tweet'
 
 export default {
   name: 'feed',
-  props: ['tweets', 'loading'],
+  props: ['tweets', 'loading', 'connecUser'],
   components: {Tweet},
   methods: {
     retweet: function (id) {

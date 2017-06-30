@@ -15,8 +15,8 @@ export default {
   props: ['utilisateurs'],
   methods: {
     onChange: function (user) {
-      this.current_user = user
-      this.$emit('cur_user', user)
+      this.connecUser = user
+      this.$emit('connecUser', user)
     }
   }
 }
