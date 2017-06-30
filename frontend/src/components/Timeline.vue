@@ -1,37 +1,48 @@
 <template>
   <div>
-    <h1>{{ msg }}</h1>
-    <feed :tweets="tweets" :loading="loading" ></feed>
+    <utilisateur :utilisateurs="utilisateurs"></utilisateur>
+    <feed :tweets="tweets" @retweeted="retweet" :loading="loading" ></feed>
   </div>
 </template>
 
 <script>
 import Feed from './Feed'
+import Utilisateur from './Utilisateur'
 import Vue from 'vue'
 import Resource from 'vue-resource'
 Vue.use(Resource)
 
 export default {
   name: 'hello',
-  components: {Feed},
+  components: {Feed, Utilisateur},
   created () {
     this.fetchTweets()
+    this.fetchUsers()
   },
   methods: {
     fetchTweets: function () {
-      // GET /someUrl
       this.$http.get('http://localhost:8080/list').then(response => {
-        // get body data
         this.tweets = response.body
         this.loading = false
       }, response => {
-        // error callback
       })
+    },
+    fetchUsers: function () {
+      this.$http.get('http://localhost:8080/list').then(response => {
+        this.utilisateurs = response.body
+        this.loading = false
+      }, response => {
+      })
+    },
+    retweet: function (id) {
+      var tweet = this.tweets.find(tweet => id === tweet.id)
+      tweet.retweeters.push({handle: 'johndoe'})
     }
   },
   data () {
     return {
       tweets: [],
+      utilisateurs: [],
       loading: true
     }
   }
