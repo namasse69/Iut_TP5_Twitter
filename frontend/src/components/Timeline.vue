@@ -1,6 +1,6 @@
 <template>
   <div>
-    <utilisateur :utilisateurs="utilisateurs" @connecUser="connecUser"></utilisateur>
+    <utilisateur :utilisateurs="utilisateurs" @connecUser="userChanged"></utilisateur>
     <feed :tweets="tweets" :connecUser="connecUser" @retweeted="retweet" :loading="loading" ></feed>
   </div>
 </template>
@@ -28,9 +28,10 @@ export default {
       })
     },
     fetchUsers: function () {
-      this.$http.get('http://localhost:8080/list').then(response => {
+      this.$http.get('http://localhost:8080/utilisateurs').then(response => {
         this.utilisateurs = response.body
         this.loading = false
+        this.userChanged(this.utilisateurs[0].handle)
       }, response => {
       })
     },
@@ -38,7 +39,7 @@ export default {
       var tweet = this.tweets.find(tweet => id === tweet.id)
       tweet.retweeters.push({handle: 'johndoe'})
     },
-    connecUser: function (user) {
+    userChanged: function (user) {
       this.connecUser = user
     }
   },

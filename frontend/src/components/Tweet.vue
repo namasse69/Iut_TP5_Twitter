@@ -10,8 +10,16 @@
     <div>
       <ul>
         <li class="button"><icon name="reply"/></li>
-        <li class="button"><a @click="retweet(tweet.id)"><icon name="retweet"/></a>
-        <span class="aside">{{ tweet.retweeters.length }}</span></li>
+        <li class="button" v-if="isRetweetable()">
+          <a @click="retweet()">
+            <icon name="retweet"/>
+            <span class="aside">{{ tweet.retweeters.length }}</span>
+          </a>
+        </li>
+        <li class="button" v-else>
+            <icon name="retweet"/>
+            <span class="aside">{{ tweet.retweeters.length }}</span>
+        </li>
         <li class="button"><icon name="heart"/></li>
         <li class="button"><icon name="envelope"/></li>
       </ul>
@@ -32,10 +40,17 @@ export default {
       return moment(date)
     },
 
-    retweet: function (id) {
+    retweet: function () {
       this.$http.get('http://localhost:8080/retweet', {responseType: 'text', params: {utilisateur: this.connecUser, tweet: this.tweet.id}}).then(response => {
-        this.$emit('retweeted', id)
+        this.$emit('retweeted', this.tweet.id)
       }, response => {})
+    },
+    isRetweetable: function () {
+      console.log(this.connecUser)
+      if (this.tweet.auteur.handle === this.connecUser) {
+        return false
+      }
+      return true
     }
   },
   created () {
@@ -43,7 +58,6 @@ export default {
   }
 }
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 li.button {
@@ -57,5 +71,4 @@ a {
 span.handle {
  color: gray;
 }
-
 </style>

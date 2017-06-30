@@ -2,8 +2,8 @@
   <div class="utilisateur">
     <select @change="onChange($event.target.value)">
      <option disabled value="">Choisissez un utilisateur ...</option>
-     <option v-for="utilisateur in utilisateurs" :value="utilisateur.auteur.handle">
-       {{ utilisateur.auteur.prenom }} {{ utilisateur.auteur.nom }}
+     <option v-for="utilisateur in utilisateurs" :value="utilisateur.handle">
+       {{ utilisateur.prenom }} {{ utilisateur.nom }}
      </option>
     </select>
   </div>
